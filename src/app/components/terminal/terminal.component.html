@@ -1,10 +1,13 @@
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <textarea matInput disabled value="{{previousLines}}"></textarea>
-  </mat-form-field>
+<div>
+  <form>
+    <mat-form-field>
+      <textarea matInput disabled value="{{previousLines}}" class="child" #textarea
+        [scrollTop]="textarea.scrollHeight"></textarea>
+    </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Esta es la terminal</mat-label>
-      <textarea [(ngModel)]="currentLine" name="currentLine" (keydown.enter)="onEnter()" matInput></textarea>
+    <mat-form-field>
+      <textarea placeholder="Esta es la terminal..." class="child" [(ngModel)]="currentLine" name="currentLine"
+        (keydown.enter)="onEnter()" matInput></textarea>
     </mat-form-field>
   </form>
+</div>
