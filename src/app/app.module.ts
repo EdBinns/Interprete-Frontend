@@ -26,12 +26,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 // Components
 import { MainViewComponent } from './components/main-view/main-view.component';
 import { CodeComponent } from './components/code/code.component';
+import { TerminalComponent } from './components/terminal/terminal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainViewComponent,
-    CodeComponent
+    CodeComponent,
+    TerminalComponent
   ],
   imports: [
     BrowserModule,
