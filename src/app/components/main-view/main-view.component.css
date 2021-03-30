@@ -1,7 +1,7 @@
   mat-grid-tile {
     float:left;
     overflow:hidden;
-    background: lightblue;
+    background: rgb(253, 253, 253);
     border: 2px solid black;
   }
 
