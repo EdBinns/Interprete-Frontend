@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { combineLatest } from 'rxjs';
 import { TerminalService } from '../../shared/services/terminal/terminal.service'
 
 @Component({
@@ -10,6 +11,8 @@ export class TerminalComponent implements OnInit {
 
   previousLines = "";
   currentLine = "";
+  multiLines = "";
+  flag = false;
 
   constructor(
     private _terminalService: TerminalService
@@ -27,10 +30,35 @@ export class TerminalComponent implements OnInit {
     } else {
       line = this.currentLine.split("\n")[1];
     }
-    this.previousLines += "\n>>> " + line;
-    this._terminalService.sendLine(line);
-    // falta mostrar el mensaje que devuelva el endpoint
+
+    if(line.includes("{") && !line.includes("}")){
+      this.flag = false;
+      this.multiLines = this.multiLines + line;
+      this.previousLines += "\n>>> " + line;
+    }else if( line.includes("}")){
+      if(line.includes("{") ){
+        this.previousLines += "\n>>> " + line;
+      }else{
+        this.multiLines = this.multiLines + line;
+        this.previousLines += "\n...> " + line ;    
+      }
+      this.flag = true;
+      this._terminalService.sendLine(this.multiLines);
+      this.multiLines = "";
+    }else{
+      if(this.flag){
+        this.previousLines += "\n>>> " + line;
+      this._terminalService.sendLine(line);
+      }else{
+        this.multiLines = this.multiLines + line;
+        this.previousLines += "\n...> " + line;
+      }
+      
+      
+    }
     this.currentLine = "";
+    // falta mostrar el mensaje que devuelva el endpoint
+
   }
 
 }
