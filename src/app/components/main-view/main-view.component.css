@@ -6,8 +6,9 @@
   }
 
   .matGrid1{
-    position: fixed;
+    background-color: white;
   }
+
   .child{
     width:100%;
     height: 100%;

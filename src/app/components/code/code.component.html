@@ -1,9 +1,15 @@
 <div>
   <div class="title">
-    <button mat-button class="btn-run">
-      <mat-icon class="green">play_arrow</mat-icon>
-      Correr
-    </button>
+    <div class="buttonContainer">
+      <button mat-button class="btn-run" (click)="run()">
+        <mat-icon class="green">play_arrow</mat-icon>
+        Correr
+      </button>
+    </div>
+
+    <div class="lines">
+      <input type="text"  disabled [(ngModel)]='cantLinesText' class="inputLines">
+    </div>
   </div>
-  <textarea matInput placeholder="Aqui puede añadir su código..." class="child"></textarea>
+  <textarea matInput placeholder="Aqui puede añadir su código..." id="textarea"  (keydown.enter)="calculateLines()" class="child" [(ngModel)]="codeText" name="codeText"></textarea>
 </div>
