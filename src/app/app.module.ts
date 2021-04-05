@@ -27,13 +27,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MainViewComponent } from './components/main-view/main-view.component';
 import { CodeComponent } from './components/code/code.component';
 import { TerminalComponent } from './components/terminal/terminal.component';
+import { VariablesComponent } from './components/variables/variables.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainViewComponent,
     CodeComponent,
-    TerminalComponent
+    TerminalComponent,
+    VariablesComponent
   ],
   imports: [
     BrowserModule,

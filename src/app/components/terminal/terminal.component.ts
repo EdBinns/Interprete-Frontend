@@ -28,44 +28,49 @@ export class TerminalComponent implements OnInit {
     let temp = this.currentLine.split("\n");
     let line: string;
     console.log("temp[1]", temp[1])
-    if (temp[1] == undefined || temp[1].length == 0) {
-      line = this.currentLine.split("\n")[0];
-    } else {
-      line = this.currentLine.split("\n")[1];
-    }
-    if(line.includes("{")){
+    line = this.currentLine.split("\n")[0];
+    if (line.includes("{")) {
       this.cont += 1;
     }
     if ((line.includes("{")) && (!line.includes("}")) && (this.multiLines === "")) {
       this.flag = false;
       this.multiLines = this.multiLines + line;
       this.previousLines += "\n>>> " + line;
-    }else if( line.includes("}")){
+    } else if (line.includes("}")) {
       this.cont -= 1;
-      if(line.includes("{") ){
+      if (line.includes("{")) {
         this.previousLines += "\n>>> " + line;
-      }else{
+      } else {
         this.multiLines = this.multiLines + line;
-        this.previousLines += "\n...> " + line ;    
+        this.previousLines += "\n...> " + line;
       }
 
-      if( this.cont === 0){
+      if (this.cont === 0) {
         this.flag = true;
         this._terminalService.sendLine(this.multiLines);
         this.multiLines = "";
       }
-    }else{
-      if(this.flag){
+    } else {
+      if (this.flag) {
         this.previousLines += "\n>>> " + line;
-      this._terminalService.sendLine(line);
-      }else{
+        this._terminalService.sendLine(line);
+      } else {
         this.multiLines = this.multiLines + line;
         this.previousLines += "\n...> " + line;
-      }  
+      }
     }
     this.currentLine = "";
     // falta mostrar el mensaje que devuelva el endpoint
 
   }
 
+  onKeydown(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      this.currentLine += "\t";
+    } else if(event.key === "Enter"){
+      event.preventDefault();
+      this.onEnter();
+    }
+  }
 }

@@ -15,21 +15,21 @@ export class CodeComponent implements OnInit {
   snippetsList = [];
   multiLines = "";
   flag = true;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   run() {
-
     console.log(this.codeText)
   }
+
   calculateLines() {
     var rows = document.querySelector('textarea').value.split("\n").length;
 
     this.cantLines = rows;
     this.cantLinesText = "Lineas:" + this.cantLines;
-
 
     let temp = this.codeText.split("\n");
     let line: string = temp[rows - 1];
@@ -37,16 +37,16 @@ export class CodeComponent implements OnInit {
       this.cont += 1;
     }
 
-    if ((line.includes("{")) && (!line.includes("}") )&& (this.multiLines === "")) {
+    if ((line.includes("{")) && (!line.includes("}")) && (this.multiLines === "")) {
       this.flag = false;
       this.multiLines = this.multiLines + line;
     } else if (line.includes("}")) {
 
       this.multiLines = this.multiLines + line;
       this.cont -= 1;
-      if( this.cont === 0){
+      if (this.cont === 0) {
         this.flag = true;
-        this.snippetsList.push(this.multiLines )
+        this.snippetsList.push(this.multiLines)
         this.multiLines = "";
       }
     } else {
@@ -56,7 +56,14 @@ export class CodeComponent implements OnInit {
         this.multiLines = this.multiLines + line;
       }
     }
-    console.log(this.snippetsList)
+    console.log(this.snippetsList);
 
+  }
+
+  onKeydown(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      this.codeText += "\t";
+    }
   }
 }

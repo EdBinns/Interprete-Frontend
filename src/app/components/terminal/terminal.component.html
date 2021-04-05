@@ -1,10 +1,10 @@
 <div>
   <div class="previousTextArea">
-    <textarea matInput disabled value="{{previousLines}}" class="child" #textarea
-    [scrollTop]="textarea.scrollHeight" style="color:#fff"></textarea>
+    <textarea matInput disabled value="{{previousLines}}" class="child" #textarea [scrollTop]="textarea.scrollHeight"
+      style="color:#fff"></textarea>
   </div>
-  <div  class="inputTextArea">
-    <textarea class="child" placeholder="Esta es la terminal..."  [(ngModel)]="currentLine" name="currentLine"
-        (keydown.enter)="onEnter()" matInput style="color:#fff"></textarea>
+  <div class="inputTextArea">
+    <textarea class="child" placeholder="Esta es la terminal..." [(ngModel)]="currentLine" name="currentLine"
+      (keydown)="onKeydown($event)" matInput style="color:#fff"></textarea>
   </div>
 </div>
