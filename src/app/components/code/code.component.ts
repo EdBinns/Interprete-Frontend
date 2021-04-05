@@ -64,6 +64,8 @@ export class CodeComponent implements OnInit {
     if (event.key === "Tab") {
       event.preventDefault();
       this.codeText += "\t";
+    } else if (event.key === "Enter") {
+      this.calculateLines();
     }
   }
 }

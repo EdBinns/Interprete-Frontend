@@ -11,6 +11,6 @@
       <input type="text" disabled [(ngModel)]='cantLinesText' class="inputLines">
     </div>
   </div>
-  <textarea matInput placeholder="Aqui puede añadir su código..." id="textarea" (keydown.enter)="calculateLines()"
-    (keydown)="onKeydown($event)" class="child" [(ngModel)]="codeText" name="codeText"></textarea>
+  <textarea matInput placeholder="Aqui puede añadir su código..." id="textarea" (keydown)="onKeydown($event)"
+    class="child" [(ngModel)]="codeText" name="codeText"></textarea>
 </div>
