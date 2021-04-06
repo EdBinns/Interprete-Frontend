@@ -14,28 +14,68 @@ export class TreesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-    data = {
-    
-    'simple obect': {
-      'simple key': 'simple value',
-      'numbers': 1234567,
-      'simple list': ['value1', 22222, 'value3'],
-      'simple obect': {
-        'key1': 'value1',
-        'key2': 22222,
-        'key3': 'value3'
-      }
-    },
-    'simple obect2': {
-      'simple key': 'simple value',
-      'numbers': 1234567,
-      'simple list': ['value1', 22222, 'value3'],
-      'simple obect': {
-        'key1': 'value1',
-        'key2': 22222,
-        'key3': 'value3'
-      }
-    }
+  // var someString: string = "{\n  \"program\": [\n    {\n      \"statement\": [\n        {\n          \"variableDecl\": [\n            {\n              \"type\": [\n                {\n                  \"simpleType\": [\n                    {\n                      \"name\": \"INT\",\n                      \"text\": \"int\"\n                    }\n                  ]\n                }\n              ]\n            },\n            {\n              \"name\": \"ID\",\n              \"text\": \"x\"\n            },\n            {\n              \"name\": \"ASYGN\",\n              \"text\": \"=\"\n            },\n            {\n              \"expression\": [\n                {\n                  \"simpleExpression\": [\n                    {\n                      \"term\": [\n                        {\n                          \"factor\": [\n                            {\n                              \"name\": \"LITERAL\",\n                              \"text\": \"3\"\n                            }\n                          ]\n                        }\n                      ]\n                    }\n                  ]\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"name\": \"PyCOMA\",\n          \"text\": \";\"\n        }\n      ]\n    },\n    {\n      \"text\": \"EOF\"\n    }\n  ]\n}";
+  // var jsonObject: any = JSON.parse(someString)
+  // console.log(jsonObject)
+
+    data ={
+      "program": [
+          {
+              "statement": [
+                  {
+                      "variableDecl": [
+                          {
+                              "type": [
+                                  {
+                                      "simpleType": [
+                                          {
+                                              "name": "INT",
+                                              "text": "int"
+                                          }
+                                      ]
+                                  }
+                              ]
+                          },
+                          {
+                              "name": "ID",
+                              "text": "x"
+                          },
+                          {
+                              "name": "ASYGN",
+                              "text": "="
+                          },
+                          {
+                              "expression": [
+                                  {
+                                      "simpleExpression": [
+                                          {
+                                              "term": [
+                                                  {
+                                                      "factor": [
+                                                          {
+                                                              "name": "LITERAL",
+                                                              "text": "3"
+                                                          }
+                                                      ]
+                                                  }
+                                              ]
+                                          }
+                                      ]
+                                  }
+                              ]
+                          }
+                      ]
+                  },
+                  {
+                      "name": "PyCOMA",
+                      "text": ";"
+                  }
+              ]
+          },
+          {
+              "text": "EOF"
+          }
+      ]
   };
 
   get code () {
