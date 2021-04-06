@@ -10,31 +10,45 @@ export class TerminalService {
 
   HTTPparams = new HttpParams();
   getSnippetTreeVar: (type: number) => void;
-  public snippetTree = "";
+  getErrorMessage: (type: number) => void;
+  public snippetTree = {};
+  public errorMessage = "";
 
   constructor(
     private _http: HttpClient,
   ) { }
 
-  updateGetData(fn: (type:number) => void) { //función que sirrve para interactuar con el list.ts
+  updateGetData(fn: (type: number) => void) { //función que sirrve para interactuar con el list.ts
     this.getSnippetTreeVar = fn
   }
-  
-  validateSnippet(snippet: string): any {
+  updateErrorMessage(fn: (type: number) => void) { //función que sirrve para interactuar con el list.ts
+    this.getErrorMessage = fn
+  }
+
+  validateSnippet(snippet: string) {
     const HTTPheaders = new HttpHeaders();
     this.HTTPparams = this.HTTPparams.set("snippet", snippet);
-    return this._http.get<ReceiverSnippet>(`${environment.apiBaseUrl}validateSnippet/`, { headers: HTTPheaders, params: this.HTTPparams }).subscribe(
+    this._http.get<ReceiverSnippet>(`${environment.apiBaseUrl}validateSnippet/`, { headers: HTTPheaders, params: this.HTTPparams }).subscribe(
       response => {
-        if (response.statusCode = 200) {
+        if (response.statusCode == 200) {
+
+          console.log(response)
+          this.snippetTree = JSON.parse(response.data);
+     
+
           this.getSnippetTreeVar(1);
-          this.snippetTree = response.data;
+
           console.log(response);
         } else {
           // mensaje de gg
+          this.errorMessage = response.data;
+          this.getErrorMessage(1);
+          console.log("ggg")
         }
 
       },
       (err: HttpErrorResponse) => {
+        console.log("error");
         console.log(err);
       }
     );

@@ -22,8 +22,17 @@ export class TerminalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this._terminalService.updateErrorMessage(this.getData.bind(this))
   }
+  getData(type:number) {
+    if (type == 1){
+        console.log("no F")
+        this.previousLines = this.previousLines + "\n" +this._terminalService.errorMessage;
 
+    }else{
+        console.log("F")
+    }
+  }
   onEnter() {
     let temp = this.currentLine.split("\n");
     let line: string;
@@ -48,12 +57,14 @@ export class TerminalComponent implements OnInit {
       if (this.cont === 0) {
         this.flag = true;
         this._terminalService.validateSnippet(this.multiLines);
+
         this.multiLines = "";
       }
     } else {
       if (this.flag) {
         this.previousLines += "\n>>> " + line;
         this._terminalService.validateSnippet(line);
+  
       } else {
         this.multiLines = this.multiLines + line;
         this.previousLines += "\n...> " + line;
