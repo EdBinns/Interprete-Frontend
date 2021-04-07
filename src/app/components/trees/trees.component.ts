@@ -22,7 +22,7 @@ export class TreesComponent implements OnInit {
 
     getData(type: number) {
         if (type == 1) {
-            console.log("no F")
+          
             this.data = this._terminalService.snippetTree;
         } else {
             console.log("F")

@@ -16,54 +16,72 @@ export class CodeComponent implements OnInit {
   snippetsList = [];
   multiLines = "";
   flag = true;
+  isError = false;
 
   constructor(
     private _terminalService: TerminalService
   ) { }
 
   ngOnInit(): void {
+    this._terminalService.updateErrorMessage(this.getError.bind(this))
   }
+
+  getError(type:number) {
+    if (type == 1){
+      this.isError = true;
+    }else{
+        console.log("F");
+    }
+  }
+
 
   run() {
     console.log(this.codeText);
     this.calculateSnippets();
     this.validateSnippets();
+    this.snippetsList = [];
   }
 
   calculateSnippets() {
     let temp = this.codeText.split("\n");
     for (let i = 0; i < temp.length; i++) {
       //const element = temp[i];
+      console.log(temp[i]);
       this.calculateSnippet(temp, i);
     }
   }
 
   calculateSnippet(temp:any[], index:number) {
+   
     let line: string = temp[index];
-    if (line.includes("{")) {
-      this.cont += 1;
-    }
 
-    if ((line.includes("{")) && (!line.includes("}")) && (this.multiLines === "")) {
-      this.flag = false;
-      this.multiLines = this.multiLines + line;
-    } else if (line.includes("}")) {
-
-      this.multiLines = this.multiLines + line;
-      this.cont -= 1;
-      if (this.cont === 0) {
-        this.flag = true;
-        this.snippetsList.push(this.multiLines)
-        this.multiLines = "";
+    if(line !== ""){
+      if (line.includes("{")) {
+        this.cont += 1;
       }
-    } else {
-      if (this.flag) {
-        this.snippetsList.push(line)
-      } else {
+  
+      if ((line.includes("{")) && (!line.includes("}")) && (this.multiLines === "")) {
+        this.flag = false;
         this.multiLines = this.multiLines + line;
+      } else if (line.includes("}")) {
+  
+        this.multiLines = this.multiLines + line;
+        this.cont -= 1;
+        if (this.cont === 0) {
+          this.flag = true;
+          this.snippetsList.push(this.multiLines)
+          this.multiLines = "";
+        }
+      } else {
+        if (this.flag) {
+          this.snippetsList.push(line)
+        } else {
+          this.multiLines = this.multiLines + line;
+        }
       }
+      console.log(this.snippetsList);
     }
-    console.log(this.snippetsList);
+    
   }
 
   /**
@@ -72,17 +90,15 @@ export class CodeComponent implements OnInit {
   validateSnippets(){
     for (let i = 0; i < this.snippetsList.length; i++) {
       const e = this.snippetsList[i];
-      console.log("e",e);
-      this._terminalService.validateSnippet(e);
+      if(!this.isError){
+        this._terminalService.validateSnippet(e);
+      }
+
     }
   }
 
   calculateLines() {
     var rows = document.querySelector('textarea').value.split("\n").length;
-
-    var someString: string = "{\n  \"program\": [\n    {\n      \"statement\": [\n        {\n          \"variableDecl\": [\n            {\n              \"type\": [\n                {\n                  \"simpleType\": [\n                    {\n                      \"name\": \"INT\",\n                      \"text\": \"int\"\n                    }\n                  ]\n                }\n              ]\n            },\n            {\n              \"name\": \"ID\",\n              \"text\": \"x\"\n            },\n            {\n              \"name\": \"ASYGN\",\n              \"text\": \"=\"\n            },\n            {\n              \"expression\": [\n                {\n                  \"simpleExpression\": [\n                    {\n                      \"term\": [\n                        {\n                          \"factor\": [\n                            {\n                              \"name\": \"LITERAL\",\n                              \"text\": \"3\"\n                            }\n                          ]\n                        }\n                      ]\n                    }\n                  ]\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"name\": \"PyCOMA\",\n          \"text\": \";\"\n        }\n      ]\n    },\n    {\n      \"text\": \"EOF\"\n    }\n  ]\n}";
-    var jsonObject: any = JSON.parse(someString)
-    console.log(jsonObject)
     this.cantLines = rows;
     this.cantLinesText = "Lineas:" + this.cantLines;
 

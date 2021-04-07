@@ -34,11 +34,12 @@ textarea {
 }
 
 .buttonContainer{
-  left: 88%;
+  left: 90%;
   top: 5%;
 }
 
 .lines{
+  left: 0%;
   top: 10%;
   color: black;
   text-align: center;
