@@ -1,0 +1,6 @@
+div{
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 99%;
+    max-width: 99%;
+}

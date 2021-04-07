@@ -31,16 +31,14 @@ textarea {
 .btn-run {
   background-color: green; 
   color: white; 
-
 }
 
 .buttonContainer{
-  left: 0%;
+  left: 88%;
   top: 5%;
 }
 
 .lines{
-  left: 90%;
   top: 10%;
   color: black;
   text-align: center;

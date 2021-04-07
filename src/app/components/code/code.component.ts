@@ -1,5 +1,6 @@
 import { ConstantPool } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { TerminalService } from 'src/app/shared/services/terminal/terminal.service';
 
 @Component({
   selector: 'app-code',
@@ -16,26 +17,29 @@ export class CodeComponent implements OnInit {
   multiLines = "";
   flag = true;
 
-  constructor() { }
+  constructor(
+    private _terminalService: TerminalService
+  ) { }
 
   ngOnInit(): void {
   }
 
   run() {
-    console.log(this.codeText)
+    console.log(this.codeText);
+    this.calculateSnippets();
+    this.validateSnippets();
   }
 
-  calculateLines() {
-    var rows = document.querySelector('textarea').value.split("\n").length;
-
-    var someString: string = "{\n  \"program\": [\n    {\n      \"statement\": [\n        {\n          \"variableDecl\": [\n            {\n              \"type\": [\n                {\n                  \"simpleType\": [\n                    {\n                      \"name\": \"INT\",\n                      \"text\": \"int\"\n                    }\n                  ]\n                }\n              ]\n            },\n            {\n              \"name\": \"ID\",\n              \"text\": \"x\"\n            },\n            {\n              \"name\": \"ASYGN\",\n              \"text\": \"=\"\n            },\n            {\n              \"expression\": [\n                {\n                  \"simpleExpression\": [\n                    {\n                      \"term\": [\n                        {\n                          \"factor\": [\n                            {\n                              \"name\": \"LITERAL\",\n                              \"text\": \"3\"\n                            }\n                          ]\n                        }\n                      ]\n                    }\n                  ]\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"name\": \"PyCOMA\",\n          \"text\": \";\"\n        }\n      ]\n    },\n    {\n      \"text\": \"EOF\"\n    }\n  ]\n}";
-    var jsonObject: any = JSON.parse(someString)
-    console.log(jsonObject)
-    this.cantLines = rows;
-    this.cantLinesText = "Lineas:" + this.cantLines;
-
+  calculateSnippets() {
     let temp = this.codeText.split("\n");
-    let line: string = temp[rows - 1];
+    for (let i = 0; i < temp.length; i++) {
+      //const element = temp[i];
+      this.calculateSnippet(temp, i);
+    }
+  }
+
+  calculateSnippet(temp:any[], index:number) {
+    let line: string = temp[index];
     if (line.includes("{")) {
       this.cont += 1;
     }
@@ -60,6 +64,27 @@ export class CodeComponent implements OnInit {
       }
     }
     console.log(this.snippetsList);
+  }
+
+  /**
+   * Envía todos los snippets al backend
+   */
+  validateSnippets(){
+    for (let i = 0; i < this.snippetsList.length; i++) {
+      const e = this.snippetsList[i];
+      console.log("e",e);
+      this._terminalService.validateSnippet(e);
+    }
+  }
+
+  calculateLines() {
+    var rows = document.querySelector('textarea').value.split("\n").length;
+
+    var someString: string = "{\n  \"program\": [\n    {\n      \"statement\": [\n        {\n          \"variableDecl\": [\n            {\n              \"type\": [\n                {\n                  \"simpleType\": [\n                    {\n                      \"name\": \"INT\",\n                      \"text\": \"int\"\n                    }\n                  ]\n                }\n              ]\n            },\n            {\n              \"name\": \"ID\",\n              \"text\": \"x\"\n            },\n            {\n              \"name\": \"ASYGN\",\n              \"text\": \"=\"\n            },\n            {\n              \"expression\": [\n                {\n                  \"simpleExpression\": [\n                    {\n                      \"term\": [\n                        {\n                          \"factor\": [\n                            {\n                              \"name\": \"LITERAL\",\n                              \"text\": \"3\"\n                            }\n                          ]\n                        }\n                      ]\n                    }\n                  ]\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"name\": \"PyCOMA\",\n          \"text\": \";\"\n        }\n      ]\n    },\n    {\n      \"text\": \"EOF\"\n    }\n  ]\n}";
+    var jsonObject: any = JSON.parse(someString)
+    console.log(jsonObject)
+    this.cantLines = rows;
+    this.cantLinesText = "Lineas:" + this.cantLines;
 
   }
 

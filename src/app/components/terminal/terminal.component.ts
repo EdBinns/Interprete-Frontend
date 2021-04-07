@@ -22,17 +22,18 @@ export class TerminalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._terminalService.updateErrorMessage(this.getData.bind(this))
+    this._terminalService.updateErrorMessage(this.getError.bind(this))
   }
-  getData(type:number) {
-    if (type == 1){
-        console.log("no F")
-        this.previousLines = this.previousLines + "\n" +this._terminalService.errorMessage;
 
+  getError(type:number) {
+    if (type == 1){
+        console.log("no F");
+        this.previousLines = this.previousLines + "\n" +this._terminalService.errorMessage;
     }else{
-        console.log("F")
+        console.log("F");
     }
   }
+
   onEnter() {
     let temp = this.currentLine.split("\n");
     let line: string;
@@ -72,8 +73,6 @@ export class TerminalComponent implements OnInit {
       }
     }
     this.currentLine = "";
-    // falta mostrar el mensaje que devuelva el endpoint
-
   }
 
   onKeydown(event) {

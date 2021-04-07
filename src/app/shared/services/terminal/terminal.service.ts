@@ -18,10 +18,11 @@ export class TerminalService {
     private _http: HttpClient,
   ) { }
 
-  updateGetData(fn: (type: number) => void) { //función que sirrve para interactuar con el list.ts
+  updateGetData(fn: (type: number) => void) { //función que sirrve para interactuar con el tree.ts
     this.getSnippetTreeVar = fn
   }
-  updateErrorMessage(fn: (type: number) => void) { //función que sirrve para interactuar con el list.ts
+  
+  updateErrorMessage(fn: (type: number) => void) { //función que sirrve para interactuar con el tree.ts
     this.getErrorMessage = fn
   }
 
@@ -30,20 +31,15 @@ export class TerminalService {
     this.HTTPparams = this.HTTPparams.set("snippet", snippet);
     this._http.get<ReceiverSnippet>(`${environment.apiBaseUrl}validateSnippet/`, { headers: HTTPheaders, params: this.HTTPparams }).subscribe(
       response => {
+        console.log("response", response);
         if (response.statusCode == 200) {
-
-          console.log(response)
           this.snippetTree = JSON.parse(response.data);
-     
-
           this.getSnippetTreeVar(1);
-
-          console.log(response);
         } else {
           // mensaje de gg
           this.errorMessage = response.data;
           this.getErrorMessage(1);
-          console.log("ggg")
+          console.log("ggg");
         }
 
       },
