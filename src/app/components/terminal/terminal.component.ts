@@ -42,7 +42,8 @@ export class TerminalComponent implements OnInit {
     if (line.includes("{")) {
       this.cont += 1;
     }
-    if ((line.includes("{")) && (!line.includes("}")) && (this.multiLines === "")) {
+
+  if ((line.includes("{")) && (!line.includes("}")) && (this.multiLines === "")) {
       this.flag = false;
       this.multiLines = this.multiLines + line;
       this.previousLines += "\n>>> " + line;
@@ -61,7 +62,7 @@ export class TerminalComponent implements OnInit {
 
         this.multiLines = "";
       }
-    } else {
+    }else {
       if (this.flag) {
         this.previousLines += "\n>>> " + line;
         this._terminalService.validateSnippet(line);

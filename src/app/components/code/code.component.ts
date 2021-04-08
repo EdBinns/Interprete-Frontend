@@ -1,6 +1,7 @@
 import { ConstantPool } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { TerminalService } from 'src/app/shared/services/terminal/terminal.service';
+import { TerminalComponent } from '../terminal/terminal.component';
 
 @Component({
   selector: 'app-code',
@@ -24,11 +25,13 @@ export class CodeComponent implements OnInit {
 
   ngOnInit(): void {
     this._terminalService.updateErrorMessage(this.getError.bind(this))
+
   }
 
   getError(type:number) {
     if (type == 1){
       this.isError = true;
+
     }else{
         console.log("F");
     }
