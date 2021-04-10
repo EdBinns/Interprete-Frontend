@@ -39,7 +39,7 @@ export class CodeComponent implements OnInit {
 
 
   run() {
-    console.log(this.codeText);
+
     this.calculateSnippets();
     this.validateSnippets();
     this.snippetsList = [];
@@ -49,7 +49,7 @@ export class CodeComponent implements OnInit {
     let temp = this.codeText.split("\n");
     for (let i = 0; i < temp.length; i++) {
       //const element = temp[i];
-      console.log(temp[i]);
+     
       this.calculateSnippet(temp, i);
     }
   }
@@ -82,7 +82,7 @@ export class CodeComponent implements OnInit {
           this.multiLines = this.multiLines + line;
         }
       }
-      console.log(this.snippetsList);
+
     }
     
   }
@@ -94,6 +94,7 @@ export class CodeComponent implements OnInit {
     for (let i = 0; i < this.snippetsList.length; i++) {
       const e = this.snippetsList[i];
       if(!this.isError){
+        console.log(e);
         this._terminalService.validateSnippet(e);
       }
 

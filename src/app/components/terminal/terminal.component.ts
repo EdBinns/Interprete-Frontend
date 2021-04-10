@@ -51,6 +51,7 @@ export class TerminalComponent implements OnInit {
       this.cont -= 1;
       if (line.includes("{")) {
         this.previousLines += "\n>>> " + line;
+        this._terminalService.validateSnippet(line);
       } else {
         this.multiLines = this.multiLines + line;
         this.previousLines += "\n...> " + line;
