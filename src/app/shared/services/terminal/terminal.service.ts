@@ -21,13 +21,18 @@ export class TerminalService {
   updateGetData(fn: (type: number) => void) { //función que sirrve para interactuar con el tree.ts
     this.getSnippetTreeVar = fn
   }
-  
+
   updateErrorMessage(fn: (type: number) => void) { //función que sirrve para interactuar con el tree.ts
     this.getErrorMessage = fn
   }
 
   validateSnippet(snippet: string) {
     const HTTPheaders = new HttpHeaders();
+
+    snippet = snippet.replace('+', "!!!");
+    console.log("envio");
+    console.log(snippet);
+  
     this.HTTPparams = this.HTTPparams.set("snippet", snippet);
     this._http.get<ReceiverSnippet>(`${environment.apiBaseUrl}validateSnippet/`, { headers: HTTPheaders, params: this.HTTPparams }).subscribe(
       response => {
