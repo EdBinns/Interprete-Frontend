@@ -18,6 +18,7 @@ export class CodeComponent implements OnInit {
   multiLines = "";
   flag = true;
   isError = false;
+  textSize = 10;
 
   constructor(
     private _terminalService: TerminalService
@@ -43,6 +44,10 @@ export class CodeComponent implements OnInit {
     this.calculateSnippets();
     this.validateSnippets();
     this.snippetsList = [];
+  }
+
+  resizeText(num:number){
+    this.textSize+=num;
   }
 
   calculateSnippets() {
