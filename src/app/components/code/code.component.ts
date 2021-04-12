@@ -100,7 +100,7 @@ export class CodeComponent implements OnInit {
       const e = this.snippetsList[i];
       if(!this.isError){
         console.log(e);
-        this._terminalService.validateSnippet(e);
+        this._terminalService.validateSnippet(e, true);
       }
 
     }

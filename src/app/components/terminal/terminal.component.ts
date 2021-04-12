@@ -11,14 +11,14 @@ import { TerminalService } from '../../shared/services/terminal/terminal.service
 
 export class TerminalComponent implements OnInit {
 
-  previousLines = "";
+  //previousLines = "";
   currentLine = "";
   multiLines = "";
   cont = 0;
   flag = true;
 
   constructor(
-    private _terminalService: TerminalService
+    public _terminalService: TerminalService
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +28,7 @@ export class TerminalComponent implements OnInit {
   getError(type:number) {
     if (type == 1){
         console.log("no F");
-        this.previousLines = this.previousLines + "\n" +this._terminalService.errorMessage;
+        this._terminalService.previousTerminalLines = this._terminalService.previousTerminalLines + "\n" +this._terminalService.errorMessage;
     }else{
         console.log("F");
     }
@@ -46,31 +46,31 @@ export class TerminalComponent implements OnInit {
   if ((line.includes("{")) && (!line.includes("}")) && (this.multiLines === "")) {
       this.flag = false;
       this.multiLines = this.multiLines + line;
-      this.previousLines += "\n>>> " + line;
+      this._terminalService.previousTerminalLines += "\n>>> " + line;
     } else if (line.includes("}")) {
       this.cont -= 1;
       if (line.includes("{")) {
-        this.previousLines += "\n>>> " + line;
-        this._terminalService.validateSnippet(line);
+        this._terminalService.previousTerminalLines += "\n>>> " + line;
+        this._terminalService.validateSnippet(line, false);
       } else {
         this.multiLines = this.multiLines + line;
-        this.previousLines += "\n...> " + line;
+        this._terminalService.previousTerminalLines += "\n...> " + line;
       }
 
       if (this.cont === 0) {
         this.flag = true;
-        this._terminalService.validateSnippet(this.multiLines);
+        this._terminalService.validateSnippet(this.multiLines, false);
 
         this.multiLines = "";
       }
     }else {
       if (this.flag) {
-        this.previousLines += "\n>>> " + line;
-        this._terminalService.validateSnippet(line);
+        this._terminalService.previousTerminalLines += "\n>>> " + line;
+        this._terminalService.validateSnippet(line, false);
   
       } else {
         this.multiLines = this.multiLines + line;
-        this.previousLines += "\n...> " + line;
+        this._terminalService.previousTerminalLines += "\n...> " + line;
 
       }
     }

@@ -13,12 +13,13 @@ export class TerminalService {
   getErrorMessage: (type: number) => void;
   public snippetTree = {};
   public errorMessage = "";
+  public previousTerminalLines = "";
 
   constructor(
     private _http: HttpClient,
   ) { }
 
-  updateGetData(fn: (type: number) => void) { //función que sirrve para interactuar con el tree.ts
+  updateGetData(fn: (type: number) => void) { //función que sirve para interactuar con el tree.ts
     this.getSnippetTreeVar = fn
   }
 
@@ -26,13 +27,14 @@ export class TerminalService {
     this.getErrorMessage = fn
   }
 
-  validateSnippet(snippet: string) {
+  validateSnippet(snippet: string, isCodeComponent: boolean) {
     const HTTPheaders = new HttpHeaders();
 
-    snippet = snippet.replace('+', "!!!");
-    console.log("envio");
-    console.log(snippet);
-  
+    //snippet = snippet.replace('+', "!!!");
+    // se hace un replaceAll al + por que el símbolo + no llega al backend
+    snippet = snippet.split('+').join('!!!');
+    console.log("envio", snippet);
+
     this.HTTPparams = this.HTTPparams.set("snippet", snippet);
     this._http.get<ReceiverSnippet>(`${environment.apiBaseUrl}validateSnippet/`, { headers: HTTPheaders, params: this.HTTPparams }).subscribe(
       response => {
@@ -40,19 +42,30 @@ export class TerminalService {
         if (response.statusCode == 200) {
           this.snippetTree = JSON.parse(response.data);
           this.getSnippetTreeVar(1);
+          let message="";
+          if (isCodeComponent) {
+            // limpia la terminal
+            this.previousTerminalLines = "";
+            message = "¡Compilación terminada!";
+          } else {
+            message = "No hay errores"
+          }
+          this.showMessage(message);
         } else {
           // mensaje de gg
-          this.errorMessage = response.data;
-          this.getErrorMessage(1);
-          console.log("ggg");
+          this.showMessage(response.data);
         }
 
       },
       (err: HttpErrorResponse) => {
-        console.log("error");
-        console.log(err);
+        console.log("error", err);
+        this.showMessage(err.message);
       }
     );
   }
 
+  showMessage(message:string){
+    this.errorMessage = message;
+    this.getErrorMessage(1);
+  }
 }
