@@ -11,7 +11,7 @@ export class TerminalService {
   HTTPparams = new HttpParams();
   getSnippetTreeVar: (type: number) => void;
   getErrorMessage: (type: number) => void;
-  public snippetTree = {};
+  public tables = "";
   public errorMessage = "";
   public previousTerminalLines = "";
 
@@ -32,6 +32,9 @@ export class TerminalService {
 
     //snippet = snippet.replace('+', "!!!");
     // se hace un replaceAll al + por que el símbolo + no llega al backend
+    if(snippet === "cls"){
+      this.tables = "";
+    }
     snippet = snippet.split('+').join('!!!');
     console.log("envio", snippet);
 
@@ -40,7 +43,7 @@ export class TerminalService {
       response => {
         console.log("response", response);
         if (response.statusCode == 200) {
-          this.snippetTree = JSON.parse(response.data);
+          this.tables = response.data;
           this.getSnippetTreeVar(1);
           let message="";
           if (isCodeComponent) {

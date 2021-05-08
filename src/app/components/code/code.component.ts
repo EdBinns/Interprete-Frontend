@@ -41,7 +41,8 @@ export class CodeComponent implements OnInit {
 
   run() {
     this.snippetsList.push("cls");
-    this.calculateSnippets();
+    this.snippetsList.push(this.codeText);
+    // this.calculateSnippets();
     this.validateSnippets();
     this.snippetsList = [];
   }

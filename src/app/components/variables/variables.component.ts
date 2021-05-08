@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TerminalService } from 'src/app/shared/services/terminal/terminal.service';
 
 @Component({
   selector: 'app-variables',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VariablesComponent implements OnInit {
 
-  constructor() { }
+  constructor( public _terminalService: TerminalService) { 
+    
+  }
 
   ngOnInit(): void {
   }

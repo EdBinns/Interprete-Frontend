@@ -25,12 +25,12 @@ export class TerminalComponent implements OnInit {
     this._terminalService.updateErrorMessage(this.getError.bind(this))
   }
 
-  getError(type:number) {
-    if (type == 1){
-        console.log("no F");
-        this._terminalService.previousTerminalLines = this._terminalService.previousTerminalLines + "\n" +this._terminalService.errorMessage;
-    }else{
-        console.log("F");
+  getError(type: number) {
+    if (type == 1) {
+      console.log("no F");
+      this._terminalService.previousTerminalLines = this._terminalService.previousTerminalLines + "\n" + this._terminalService.errorMessage;
+    } else {
+      console.log("F");
     }
   }
 
@@ -43,37 +43,45 @@ export class TerminalComponent implements OnInit {
       this.cont += 1;
     }
 
-  if ((line.includes("{")) && (!line.includes("}")) && (this.multiLines === "")) {
-      this.flag = false;
-      this.multiLines = this.multiLines + line;
-      this._terminalService.previousTerminalLines += "\n>>> " + line;
-    } else if (line.includes("}")) {
-      this.cont -= 1;
-      if (line.includes("{")) {
-        this._terminalService.previousTerminalLines += "\n>>> " + line;
-        this._terminalService.validateSnippet(line, false);
-      } else {
+    if(line ==="cls"){
+      this._terminalService.previousTerminalLines = ""
+      this.multiLines = "";
+      this._terminalService.validateSnippet(line, false);
+    }else{
+      if ((line.includes("{")) && (!line.includes("}")) && (this.multiLines === "")) {
+        this.flag = false;
         this.multiLines = this.multiLines + line;
-        this._terminalService.previousTerminalLines += "\n...> " + line;
-      }
-
-      if (this.cont === 0) {
-        this.flag = true;
-        this._terminalService.validateSnippet(this.multiLines, false);
-
-        this.multiLines = "";
-      }
-    }else {
-      if (this.flag) {
         this._terminalService.previousTerminalLines += "\n>>> " + line;
-        this._terminalService.validateSnippet(line, false);
+      } else if (line.includes("}")) {
+        this.cont -= 1;
+        if (line.includes("{")) {
+          this._terminalService.previousTerminalLines += "\n>>> " + line;
+          this._terminalService.validateSnippet(line, false);
+        } else {
+          this.multiLines = this.multiLines + line;
+          this._terminalService.previousTerminalLines += "\n...> " + line;
+        }
   
+        if (this.cont === 0) {
+          this.flag = true;
+          this._terminalService.validateSnippet(this.multiLines, false);
+  
+          this.multiLines = "";
+        }
       } else {
-        this.multiLines = this.multiLines + line;
-        this._terminalService.previousTerminalLines += "\n...> " + line;
-
+  
+        if (this.flag) {
+          this._terminalService.previousTerminalLines += "\n>>> " + line;
+          this._terminalService.validateSnippet(line, false);
+  
+        } else {
+          this.multiLines = this.multiLines + line;
+          this._terminalService.previousTerminalLines += "\n...> " + line;
+        }
       }
+  
     }
+    
     this.currentLine = "";
   }
 
@@ -81,7 +89,7 @@ export class TerminalComponent implements OnInit {
     if (event.key === "Tab") {
       event.preventDefault();
       this.currentLine += "\t";
-    } else if(event.key === "Enter"){
+    } else if (event.key === "Enter") {
       event.preventDefault();
       this.onEnter();
     }
