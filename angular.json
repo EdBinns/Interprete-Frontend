@@ -119,8 +119,13 @@
               "devServerTarget": "Interprete-Frontend:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "Interprete-Frontend"
 }

@@ -72,3 +72,4 @@ export class TerminalService {
     this.getErrorMessage(1);
   }
 }
+
