@@ -17,7 +17,7 @@ export class TreesComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this._terminalService.updateGetData(this.getData.bind(this))
+        // this._terminalService.updateGetData(this.getData.bind(this))
     }
 
     getData(type: number) {

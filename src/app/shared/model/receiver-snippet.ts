@@ -1,3 +1,4 @@
+
 export interface ReceiverSnippet {
     statusCode?: number;
     mensaje?: string;

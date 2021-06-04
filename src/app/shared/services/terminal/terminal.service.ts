@@ -9,7 +9,7 @@ import { ReceiverSnippet } from '../../model/receiver-snippet';
 export class TerminalService {
 
   HTTPparams = new HttpParams();
-  getSnippetTreeVar: (type: number) => void;
+  // getSnippetTreeVar: (type: number) => void;
   getErrorMessage: (type: number) => void;
   public tables = "";
   public errorMessage = "";
@@ -19,9 +19,9 @@ export class TerminalService {
     private _http: HttpClient,
   ) { }
 
-  updateGetData(fn: (type: number) => void) { //función que sirve para interactuar con el tree.ts
-    this.getSnippetTreeVar = fn
-  }
+  // updateGetData(fn: (type: number) => void) { //función que sirve para interactuar con el tree.ts
+  //   this.getSnippetTreeVar = fn
+  // }
 
   updateErrorMessage(fn: (type: number) => void) { //función que sirrve para interactuar con el tree.ts
     this.getErrorMessage = fn
@@ -43,15 +43,20 @@ export class TerminalService {
       response => {
         console.log("response", response);
         if (response.statusCode == 200) {
-          this.tables = response.data;
-          this.getSnippetTreeVar(1);
+          let json = JSON.parse(response.data)
+          console.log(json)
+          this.tables = json.finalMessage;
+          console.log(json.finalMessage)
+          // this.getSnippetTreeVar(1);
           let message="";
+          message += json.printMessage;
+          json[0]
           if (isCodeComponent) {
             // limpia la terminal
             this.previousTerminalLines = "";
-            message = "¡Compilación terminada!";
+            message += "\n ¡Compilación terminada!";
           } else {
-            message = "No hay errores"
+            message += "\n  No hay errores"
           }
           this.showMessage(message);
         } else {
