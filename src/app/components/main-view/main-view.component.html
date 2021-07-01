@@ -1,6 +1,26 @@
-<mat-grid-list cols="2" rowHeight="2:1">
-    <mat-grid-tile>1</mat-grid-tile>
-    <mat-grid-tile>2</mat-grid-tile>
-    <mat-grid-tile>3</mat-grid-tile>
-    <mat-grid-tile>4</mat-grid-tile>
-  </mat-grid-list>
+<div class="container">
+
+  <div clas=divList>
+    <mat-grid-list cols="3" rows=3 rowHeight="2:1">
+      <mat-grid-tile [rowspan]=2 [colspan]=2 md-colspan="2" class="matGrid1">
+        <div class="child">
+          <app-code></app-code>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile [rowspan]=3 [colspan]=1 md-colspan="2" class="matGrid2">
+        <div class="child"  >
+          <app-variables></app-variables>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]=2>
+        <div class="child">
+          <app-terminal></app-terminal>
+        </div>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </div>
+
+</div>

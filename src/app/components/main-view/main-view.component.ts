@@ -10,7 +10,6 @@ export class MainViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log("Hola")
   }
 
 }

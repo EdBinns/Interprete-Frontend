@@ -1,1 +1,22 @@
-<p>Aquí va a venir el código</p>
+<div>
+
+  <div class="title">
+    <input type="text" disabled [(ngModel)]='cantLinesText' class="inputLines">
+
+    <button mat-button class="btn" (click)="resizeText(-1)">
+      <mat-icon class="green">remove</mat-icon>
+    </button>
+
+    <button mat-button class="btn" (click)="resizeText(1)">
+      <mat-icon class="green">add</mat-icon>
+    </button>
+
+    <button mat-button class="btn-run" (click)="run()">
+      <mat-icon class="green">play_arrow</mat-icon>
+      Correr
+    </button>
+
+  </div>
+  <textarea [style.font-size.pt]="textSize" matInput placeholder="Aqui puede añadir su código..." id="textarea"
+    (keydown)="onKeydown($event)" class="child" [(ngModel)]="codeText" name="codeText"></textarea>
+</div>
